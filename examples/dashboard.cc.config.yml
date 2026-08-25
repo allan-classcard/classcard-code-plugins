@@ -1,0 +1,8 @@
+project:
+  type: frontend
+  name: classcard-dashboard
+
+rules:
+  - common
+  - frontend/common
+  - frontend/dashboard

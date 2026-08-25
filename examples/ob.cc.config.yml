@@ -1,0 +1,8 @@
+project:
+  type: frontend
+  name: classcard-online-booking
+
+rules:
+  - common
+  - frontend/common
+  - frontend/ob

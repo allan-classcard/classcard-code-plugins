@@ -1,0 +1,7 @@
+project:
+  type: backend
+  name: example-backend-repo
+
+rules:
+  - common
+  - backend/common
