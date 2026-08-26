@@ -1,6 +1,8 @@
 # Backend Code Review Rules
 
-Extends `rules/common/code-review.md`.
+@rules/common/code-review.md
+
+**Flag any rule below — or any rule in the extended file above — that isn't met, including a required pattern/component that's simply absent from the diff.**
 
 ## Additional Rules
 

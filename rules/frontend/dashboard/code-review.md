@@ -1,11 +1,13 @@
 # classcard-dashboard Code Review Rules
 
-Extends `rules/frontend/common/code-review.md` (which extends `rules/common/code-review.md`).
+@rules/frontend/common/code-review.md
+
+**Flag any rule below — or any rule in the extended file above — that isn't met, including a required pattern/component that's simply absent from the diff.**
 
 ## Additional Rules
 
 - Use the `tippy-tooltip` component for tooltips, not a hand-rolled hover element
-- Use the `Slideover` component for any sidebar-style panel
+- Use the `Slideover` component for any sidebar-style panel with appropriate variant
 - Use the `Modal` component for any dialog
 - Use/try `AiAssistantButton` for AI-related dropdown options
 - Use `Skeleton` for skeleton/loading-placeholder UI

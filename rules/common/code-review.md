@@ -13,7 +13,7 @@ Org-wide standards. Every layer (frontend, backend) extends this file.
 
 ## Code Quality (HIGH)
 
-- Functions kept under ~50 lines; extract helpers past that
+- Functions kept under ~50-100 lines at max; extract helpers past that
 - Files kept under ~800 lines; split by responsibility past that
 - Nesting depth under 4 levels
 - Errors are caught and propagated, never silently swallowed
@@ -23,5 +23,4 @@ Org-wide standards. Every layer (frontend, backend) extends this file.
 ## Best Practices (MEDIUM)
 
 - Prefer immutable data patterns over in-place mutation
-- New logic has at least one test covering its primary path
 - Public functions/exports document non-obvious behavior, not restate the obvious

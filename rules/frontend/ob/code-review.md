@@ -1,6 +1,8 @@
 # classcard-ob Code Review Rules
 
-Extends `rules/frontend/common/code-review.md` (which extends `rules/common/code-review.md`).
+@rules/frontend/common/code-review.md
+
+**Flag any rule below — or any rule in the extended file above — that isn't met, including a required pattern/component that's simply absent from the diff.**
 
 ## Additional Rules
 

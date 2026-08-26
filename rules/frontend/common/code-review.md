@@ -1,16 +1,18 @@
 # Frontend Code Review Rules
 
-Extends `rules/common/code-review.md`.
+@rules/common/code-review.md
 
 Grounded in classcard's actual frontend stack (verified against `classcard-dashboard` and `classcard-ob`, both Nuxt 2 / Vue 2 SPA/SSR apps).
+
+**Flag any rule below — or any rule in the extended file above — that isn't met, including a required pattern/component that's simply absent from the diff.**
 
 ## Stack
 
 - Nuxt 2 (Vue 2 Options API) — no Vue 3/Composition API assumptions
 - Shared UI kit: `classcard-ui` — prefer its components over hand-rolled equivalents
 - Styling: Tailwind CSS (with `prettier-plugin-tailwindcss` — class order is autoformatted, don't hand-reorder)
-- HTTP: `@nuxtjs/axios`, wrapped in per-resource modules under `api/*.js` (e.g. `api/rentals.js`) — new endpoints follow this module-per-resource shape, not ad hoc `axios.get()` calls scattered in components
-- i18n: `@nuxtjs/i18n` — no hardcoded user-facing strings, always through translation keys
+- HTTP: `@nuxtjs/axios`, wrapped in per-resource modules under `api/*.js` (e.g. `api/rentals.js`) — new endpoints follow this module-per-resource shape, not ad hoc `axios.get()` calls scattered in components unless required
+- i18n: `@nuxtjs/i18n` — OB has no hardcoded user-facing strings, always through translation keys
 - Error tracking: `@nuxtjs/sentry` — don't swallow errors that Sentry should see
 - Dates: `dayjs` (not `moment`, not raw `Date` math)
 
@@ -27,6 +29,7 @@ Grounded in classcard's actual frontend stack (verified against `classcard-dashb
 
 - Never use `v-if` and `v-for` on the same element — filter/compute the list first, or wrap in a parent element/`<template>`
 - Use `<template>` fragments (no wrapping `<div>`) when an element exists only to hold a `v-if`/`v-for` and carries no class/attrs
+- Do not add a `key` directly to a `<template>` element — keys on `<template>` are ignored by Vue and can cause confusion; place the key on the real DOM or component element rendered by the template
 - `v-for` key is a proper stable/unique id from the data, never the array index — index breaks reordering, insertion, and deletion
 
 ## Component Reuse & Structure
