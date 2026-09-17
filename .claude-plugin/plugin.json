@@ -1,0 +1,17 @@
+{
+  "name": "cc",
+  "version": "0.1.0",
+  "description": "Classcard Code Plugins — shared skills and layered code-review rules for Claude Code across classcard repositories",
+  "author": {
+    "name": "Allan Joston Fernandes"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "code-review",
+    "rules",
+    "engineering-standards"
+  ],
+  "skills": ["./skills/"],
+  "commands": ["./commands/"]
+}
