@@ -3,10 +3,18 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const { resolveConfig, buildRuleDocument } = require('../lib/rule-resolver');
+const {
+  resolveConfig,
+  buildRuleDocument,
+  loadRepoRegistry,
+  resolveRepoRules,
+  findRepoEntry,
+  detectRepoName,
+} = require('../lib/rule-resolver');
 
 const repoRoot = path.resolve(__dirname, '..');
 const fixturesDir = path.join(__dirname, 'fixtures');
+const registry = loadRepoRegistry(path.join(repoRoot, 'repos.json'));
 
 test('resolveConfig parses a valid frontend config', () => {
   const config = resolveConfig(path.join(repoRoot, 'examples', 'frontend.cc.config.yml'));
@@ -51,4 +59,43 @@ test('ob config resolves common + frontend/common + frontend/ob', () => {
 
   const obDoc = buildRuleDocument(repoRoot, obConfig.rules);
   assert.ok(obDoc.includes('<!-- layer: frontend/ob -->'), 'expected frontend/ob layer marker');
+});
+
+test('resolveRepoRules resolves a repo by its registry key', () => {
+  const entry = resolveRepoRules(registry, 'dashboard');
+  assert.deepStrictEqual(entry.rules, ['common', 'frontend/common', 'frontend/dashboard']);
+});
+
+test('resolveRepoRules resolves a repo by alias, case-insensitively', () => {
+  const entry = resolveRepoRules(registry, 'Classcard-Online-Booking');
+  assert.deepStrictEqual(entry.rules, ['common', 'frontend/common', 'frontend/ob']);
+});
+
+test('resolveRepoRules throws with the known-repo list on an unknown repo', () => {
+  assert.throws(
+    () => resolveRepoRules(registry, 'nonexistent'),
+    /Unknown repo "nonexistent"\. Known repos: dashboard, ob/
+  );
+});
+
+test('detectRepoName reads the "name" field from cwd/package.json', () => {
+  const name = detectRepoName(path.join(fixturesDir, 'detect-dashboard'));
+  assert.strictEqual(name, 'classcard-dashboard');
+});
+
+test('detectRepoName returns null when there is no package.json', () => {
+  const name = detectRepoName(fixturesDir);
+  assert.strictEqual(name, null);
+});
+
+test('findRepoEntry returns null (not a throw) for an unmatched name', () => {
+  assert.strictEqual(findRepoEntry(registry, 'some-other-repo'), null);
+  assert.strictEqual(findRepoEntry(registry, null), null);
+});
+
+test('auto-detect chain: detected package.json name resolves via the registry', () => {
+  const name = detectRepoName(path.join(fixturesDir, 'detect-dashboard'));
+  const entry = findRepoEntry(registry, name);
+  assert.ok(entry, 'expected a registry match for classcard-dashboard');
+  assert.deepStrictEqual(entry.rules, ['common', 'frontend/common', 'frontend/dashboard']);
 });
