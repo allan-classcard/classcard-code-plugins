@@ -1,0 +1,12 @@
+{
+  "dashboard": {
+    "aliases": ["classcard-dashboard", "classcard"],
+    "type": "frontend",
+    "rules": ["common", "frontend/common", "frontend/dashboard"]
+  },
+  "ob": {
+    "aliases": ["classcard-ob", "classcard-online-booking"],
+    "type": "frontend",
+    "rules": ["common", "frontend/common", "frontend/ob"]
+  }
+}
